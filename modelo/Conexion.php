@@ -1,17 +1,22 @@
 <?php
-class Conexion{
-    private $servidor = "localhost";
-    private $db = "farmaciasistema";
-    private $puerto = 3306;
-    private $charset = "utf8";
-    private $usuario = "root";
-    private $contrasena="";
-    public $pdo = null;
-    private $atributos = [PDO::ATTR_CASE=>PDO::CASE_LOWER, PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION, PDO::ATTR_ORACLE_NULLS=>PDO::NULL_EMPTY_STRING, PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ];
+class Conexion {
+    public $pdo;
 
-    function __construct(){
-        
-        $this->pdo = new PDO("mysql:dbname={$this->db};host={$this->servidor};port=$this->puerto;charset=$this->charset", $this->usuario,$this->contrasena,$this->atributos);
+    public function __construct() {
+        // Intentamos leer variables de entorno (Nube), si no existen, usa valores locales
+        $host = getenv('DB_HOST') ?: 'localhost';
+        $dbName = getenv('DB_NAME') ?: 'farmaciasistema';
+        $user = getenv('DB_USER') ?: 'root';
+        $pass = getenv('DB_PASS') ?: '';
+        $port = getenv('DB_PORT') ?: '3306';
+
+        try {
+            // Cadena de conexión dinámica
+            $this->pdo = new PDO("mysql:host={$host};port={$port};dbname={$dbName};charset=utf8", $user, $pass);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo "Error de conexión: " . $e->getMessage();
+        }
     }
 }
 ?>
