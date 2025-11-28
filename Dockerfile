@@ -4,13 +4,14 @@ FROM php:8.2-apache
 # Instalamos las conexiones a la base de datos
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# 1. Copiamos tus archivos a la raíz (para que el sitio cargue al entrar al link)
-COPY farmacia/ /var/www/html/
+# --- CAMBIO CLAVE ---
+# Copiamos tu carpeta 'farmacia' DENTRO de una carpeta 'farmacia' en el servidor.
+# Así la ruta "/farmacia/css/style.css" volverá a ser válida.
+COPY farmacia/ /var/www/html/farmacia/
 
-# 2. EL TRUCO DE MAGIA (Simulink):
-# Creamos una carpeta "falsa" llamada farmacia que te redirige a la raíz.
-# Así, cuando tu código pida "/farmacia/css/style.css", el servidor lo encontrará.
-#RUN ln -s /var/www/html /var/www/html/farmacia
+# Truco extra: Creamos un index.php en la raíz que redirige automáticamente a /farmacia
+# Así no verás una página en blanco al entrar.
+RUN echo '<?php header("Location: /farmacia/"); ?>' > /var/www/html/index.php
 
 # Abrimos el puerto
 EXPOSE 80

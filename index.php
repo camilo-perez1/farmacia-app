@@ -1,3 +1,13 @@
+ <?php
+    session_start();
+    if(!empty($_SESSION['us_tipo'])){
+        header('location: controlador/LoginController.php');
+    }
+    else{
+    session_destroy();
+    }
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,20 +17,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type = "text/css" href="/css/style.css">
-<link rel="stylesheet" type="text/css" href="/css/css/all.min.css">
+    <link rel="stylesheet" type = "text/css" href="/farmacia/css/style.css">
+   <link rel="stylesheet" type="text/css" href="/farmacia/css/css/all.min.css">
 </head> 
- <?php
-    session_start();
-    if(!empty($_SESSION['us_tipo'])){
-        header('location: controlador/LoginController.php');
-    }
-    else{
-    session_destroy();
 
-    }
-   
-    ?>
 <body>
     <img class = "wave" src="img/wave.png" alt="">
     <img class = "wave-right" src="img/wave-right.png" alt="">
