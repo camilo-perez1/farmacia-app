@@ -10,7 +10,7 @@ COPY farmacia/ /var/www/html/
 # 2. EL TRUCO DE MAGIA (Simulink):
 # Creamos una carpeta "falsa" llamada farmacia que te redirige a la raíz.
 # Así, cuando tu código pida "/farmacia/css/style.css", el servidor lo encontrará.
-RUN ln -s /var/www/html /var/www/html/farmacia
+#RUN ln -s /var/www/html /var/www/html/farmacia
 
 # Abrimos el puerto
 EXPOSE 80
